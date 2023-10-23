@@ -5,41 +5,22 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class PlayWithStrings {
+
+    static Scanner scan = new Scanner(System.in);
+
     public static void main(String[] args) {
 
-        System.out.println("Hello String World");
-        Scanner scan = new Scanner(System.in);
+        printIntitials();
 
-        System.out.println("Geben Sie Vorname ein: ");
-        String vorName = scan.nextLine();
-
-        System.out.println("Geben Sie Nachname ein: ");
-        String nachName = scan.nextLine();
-
-        printIntitials(vorName, nachName);
-
-        System.out.println("Geben Sie das erste Wort ein ");
-        String firstWord = scan.nextLine();
-
-        System.out.println("Geben Sie das zweite Wort ein ");
-        String secondWord = scan.nextLine();
-
-        boolean isAnagram = areAnagrams(firstWord, secondWord);
-
-        if (isAnagram) {
-            System.out.println("Es gibt Anagram!");
+        if (areAnagrams()) {
         } else {
             System.out.println("Es gibt kein Anagram");
         }
 
-        System.out.println("Geben Sie das  Wort ein - Palindrome Checker ");
-        String palWortOderNein = scan.nextLine();
-
-        boolean isPalindrom = isPalindrome(palWortOderNein);
-        if (isPalindrom) {
-            System.out.println("Das Wort ist Palindrom");
+        if (isPalindrome()) {
+            System.out.println("Es gibt Palindrome");
         } else {
-            System.out.println("Das Wort ist kein Palindrom");
+            System.out.println("Es gibt keine Palindrome");
         }
     }
 
@@ -51,9 +32,14 @@ public class PlayWithStrings {
      * @param firstname
      * @param lastname
      */
-    public static void printIntitials(String firstname, String lastname) {
-        StringBuilder sb = new StringBuilder();
-        System.out.println(firstname + " " + sb.append(lastname));
+    public static void printIntitials() {
+        System.out.println("Geben Sie Vorname ein: ");
+        String vorName = scan.nextLine();
+
+        System.out.println("Geben Sie Nachname ein: ");
+        String nachName = scan.nextLine();
+
+        System.out.println(vorName.toUpperCase().charAt(0) + ". " + nachName.toUpperCase().charAt(0) + ".");
     }
 
     /**
@@ -69,45 +55,34 @@ public class PlayWithStrings {
      * @param value2
      * @return true if the values are anagrams, false otherwise.
      */
-    public static boolean areAnagrams(String value1, String value2) {
-        StringBuffer sb = new StringBuffer(value1);
-        StringBuffer sb2 = new StringBuffer(value2);
-        char[] stringSort;
-        char[] stringSort2;
-        String newValue1 = "";
-        String newValue2 = "";
-        if (value1.contains(" ")) {
-            // System.out.println("index of : " + sb.indexOf(" "));
-            sb.deleteCharAt(sb.indexOf(" "));
-            // System.out.println(sb);
-        }
+    public static boolean areAnagrams() {
+        System.out.println("Geben Sie das erste Wort ein ");
+        String value1 = scan.nextLine();
 
-        value1 = sb.toString();
-        stringSort = value1.toCharArray();
-        Arrays.sort(stringSort);
-        newValue1 = new String(stringSort);
+        System.out.println("Geben Sie das zweite Wort ein ");
+        String value2 = scan.nextLine();
 
+        value1 = value1.replaceAll(" ", "");
+        value2 = value2.replaceAll(" ", "");
 
-        if (value2.contains(" ")) {
-            // System.out.println("index of : " + sb2.indexOf(" "));
-            sb2.deleteCharAt(sb2.indexOf(" "));
-            //  System.out.println(sb2);
-        }
+        String newValue1 = sortString(value1);
+        String newValue2 = sortString(value2);
 
-        value2 = sb2.toString();
-        stringSort2 = value2.toCharArray();
-        Arrays.sort(stringSort2);
-        newValue2 = new String(stringSort2);
-
-        System.out.println(newValue1);
-        System.out.println(newValue2);
 
         if (newValue1.equals(newValue2)) {
-
+            System.out.println("Es gibt Anagram!");
             return true;
         }
         return false;
     }
+
+    public static String sortString(String a) {
+        char[] c = a.toCharArray();
+        Arrays.sort(c);
+        String aa = new String(c);
+        return aa;
+    }
+
 
     /**
      * TODO: palindrone checker
@@ -123,10 +98,15 @@ public class PlayWithStrings {
      * @param value
      * @return true if it is a palindrome, false otherwise.
      */
-    public static boolean isPalindrome(String value) {
-        StringBuilder sb = new StringBuilder(value);
-        String st = new String(sb.reverse().toString());
-        if (value.equals(st)) {
+    public static boolean isPalindrome() {
+        System.out.println("Geben Sie das  Wort ein - Palindrome Checker ");
+        String palWortOderNein = scan.nextLine();
+        char[] c = palWortOderNein.toCharArray();
+        for (int i = 0; i < c.length; i++) {
+            c[i] = c[c.length - i - 1];
+        }
+        String palWortOderNein2 = new String(c);
+        if (palWortOderNein.equals(palWortOderNein2)) {
             return true;
         }
         return false;
